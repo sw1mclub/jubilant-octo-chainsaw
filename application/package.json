@@ -6,6 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "start": "tsc && node out/src/main.js ",
+    "create_wallet": "tsc && node out/src/createwallet.js ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,3 +1,6 @@
 {
-    "ethNodeAddress": "XXX.X.X.X"
+    "ethNodeAddress": "XXX.X.X.X",
+    "testNodeAddress": "https://rinkeby.infura.io/",
+    "walletAddress": "0x000000",
+    "privateKey": "0x000000"
 }
