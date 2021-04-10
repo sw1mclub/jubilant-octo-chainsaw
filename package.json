@@ -1,0 +1,25 @@
+{
+  "name": "jubilant-octo-chainsaw",
+  "version": "1.0.0",
+  "description": "Repository is set up access token set up",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc",
+    "start": "tsc && node out/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sw1mclub/jubilant-octo-chainsaw.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sw1mclub/jubilant-octo-chainsaw/issues"
+  },
+  "homepage": "https://github.com/sw1mclub/jubilant-octo-chainsaw#readme",
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  }
+}
