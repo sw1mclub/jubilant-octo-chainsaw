@@ -2,5 +2,7 @@
     "ethNodeAddress": "XXX.X.X.X",
     "testNodeAddress": "https://rinkeby.infura.io/",
     "walletAddress": "0x000000",
-    "privateKey": "0x000000"
+    "privateKey": "0x000000",
+    "chainID": 1,
+    "chain": "mainnet"
 }
