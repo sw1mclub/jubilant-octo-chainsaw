@@ -1,10 +1,16 @@
 {
     "compilerOptions": {
         "target": "es5",
+        "esModuleInterop": true,
         "module": "commonjs",
         "outDir": "out",
         "strict": true,
         "moduleResolution": "node",
         "resolveJsonModule": true
-    }
+    },
+    "exclude": [
+        "node_modules",
+        "node_modules/**/*",
+        "**/*.js",
+    ]
 }
