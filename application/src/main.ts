@@ -1,6 +1,6 @@
 import * as config from '../configs/secret-config.json';
 import Web3 from 'web3';
-import queryUniswap from './uniswap';
+import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
 import Router from './router';
 
@@ -10,6 +10,6 @@ const ethersProvider = new ethers.providers.JsonRpcProvider(config.ethNodeAddres
 const web3 = new Web3(web3Provider);
 web3.eth.defaultAccount = config.walletAddress;
 
-queryUniswap(ethersProvider).then((trade) => {
+TradeBuilder.createEthToUSDCTrade(ethersProvider).then((trade) => {
   Router.executeTrade(web3, trade);
 });
