@@ -6,6 +6,8 @@ const TRADE_COOLDOWN_TIME = 1000 * 60 * 2;
 const INTERVAL = 1000 * 10;
 const VOLATILITY_THRESHOLD = 0.0005;
 
+const ETH_TO_SPEND = 2;
+
 type BuyFunc = (amount: number) => Promise<{ eth: number, usdc: number }>;
 
 async function sleep(ms: number) {
@@ -42,8 +44,8 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
         const currentEthPrice = Number(prices.wethToUSDC);
         const sellThreshold = lastEthPrice * (1 + VOLATILITY_THRESHOLD);
         const buyThreshold = lastEthPrice * (1 - VOLATILITY_THRESHOLD);
-        if (ethBalance > 0.1 && currentEthPrice > sellThreshold) {
-            const result = await buyUSDC(ethBalance);
+        if (ethBalance > ETH_TO_SPEND + 0.1 && currentEthPrice > sellThreshold) {
+            const result = await buyUSDC(ETH_TO_SPEND);
             ethBalance = result.eth;
             usdcBalance = result.usdc;
             lastTradeUnixTime = Date.now();
