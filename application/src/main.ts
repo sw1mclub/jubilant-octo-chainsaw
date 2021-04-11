@@ -41,6 +41,12 @@ async function verifyCanExecuteUSDCToEthTransaction(): Promise<boolean> {
 }
 
 async function main() {
+  const initialEthBalance = await TradeBuilder.getMyEthBalance(web3);
+  const initialUSDCBalance = await TradeBuilder.getUSDCBalance(web3);
+
+  console.log("Initial balances:");
+  console.log({initialEthBalance, initialUSDCBalance});
+
   const canExecuteEthToUSDC = await verifyCanExecuteEthToUSDCTransaction();
   if (!canExecuteEthToUSDC) {
     console.log('Cannot execute eth to usdc trades. Terminating...');

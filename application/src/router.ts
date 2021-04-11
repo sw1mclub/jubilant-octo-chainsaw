@@ -6,7 +6,7 @@ import * as config from '../configs/secret-config.json';
 import TransactionHelper from './transaction'
 
 async function executeEthToTokenTrade(web3: Web3, trade: Trade) {
-    const routerAbi = IUniswapV2Router02.abi as unknown as AbiItem;
+    const routerAbi = IUniswapV2Router02.abi as AbiItem[];
     const routerContract = new web3.eth.Contract(routerAbi, config.routerContractAddress);
     const myAddress = web3.eth.defaultAccount;
     if (!myAddress) {

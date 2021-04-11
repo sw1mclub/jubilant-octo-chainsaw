@@ -2,9 +2,9 @@ import Web3 from 'web3';
 import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
 
-const TRADE_COOLDOWN_TIME = 1000 * 60 * 10;
-const INTERVAL = 1000 * 60;
-const VOLATILITY_THRESHOLD = 0.05;
+const TRADE_COOLDOWN_TIME = 1000 * 60 * 2;
+const INTERVAL = 1000 * 10;
+const VOLATILITY_THRESHOLD = 0.0005;
 
 type BuyFunc = (amount: number) => Promise<{ eth: number, usdc: number }>;
 
