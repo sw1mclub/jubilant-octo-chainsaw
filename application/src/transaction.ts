@@ -59,6 +59,8 @@ async function sendTransaction(web3: Web3, destinationWalletAddress: string, amo
             }
         }
     );
+
+    return transactionId;
 }
 
 export default {sendTransaction, getCurrentGasPrices};

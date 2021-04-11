@@ -26,7 +26,7 @@ async function executeEthToTokenTrade(web3: Web3, trade: Trade) {
         deadline).encodeABI();
     console.log("Created eth to token transaction data and sending transaction");
     console.log(transactionData);
-    TransactionHelper.sendTransaction(web3, config.routerContractAddress, inputAmount, transactionData);
+    return TransactionHelper.sendTransaction(web3, config.routerContractAddress, inputAmount, transactionData);
 }
 
 async function executeTokenToEthTrade(web3: Web3, trade: Trade) {
@@ -53,7 +53,7 @@ async function executeTokenToEthTrade(web3: Web3, trade: Trade) {
         deadline).encodeABI();
     console.log("Created token to eth transaction data and sending transaction");
     console.log(transactionData);
-    TransactionHelper.sendTransaction(web3, config.routerContractAddress, "0", transactionData);
+    return TransactionHelper.sendTransaction(web3, config.routerContractAddress, "0", transactionData);
 }
 
 export default { executeEthToTokenTrade, executeTokenToEthTrade };

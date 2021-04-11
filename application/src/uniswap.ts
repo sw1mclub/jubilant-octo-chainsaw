@@ -1,5 +1,6 @@
 import { ChainId, Fetcher, WETH, Route, Trade, TokenAmount, TradeType } from '@uniswap/sdk';
 import ethers from 'ethers';
+import Web3 from 'web3';
 import * as config from '../configs/secret-config.json';
 
 async function getPrices(customHttpProvider: ethers.providers.JsonRpcProvider) {
@@ -16,7 +17,8 @@ async function getPrices(customHttpProvider: ethers.providers.JsonRpcProvider) {
     return {wethToUSDC, usdcToWEth};
 }
 
-async function createEthToUSDCTrade(customHttpProvider: ethers.providers.JsonRpcProvider, weiToSpend: string): Promise<Trade> {
+async function createEthToUSDCTrade(customHttpProvider: ethers.providers.JsonRpcProvider, ethToSpend: string): Promise<Trade> {
+    const weiToSpend = Web3.utils.toWei(ethToSpend, 'ether');
     const chainID = ChainId.MAINNET;
     const weth = await Fetcher.fetchTokenData(chainID, WETH[chainID].address, customHttpProvider);
     const usdc = await Fetcher.fetchTokenData(chainID, config.usdcTokenAddress, customHttpProvider);
