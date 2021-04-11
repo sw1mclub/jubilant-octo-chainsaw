@@ -2,7 +2,6 @@ import * as config from '../configs/secret-config.json';
 import Web3 from 'web3';
 import queryUniswap from './uniswap';
 import * as ethers from 'ethers';
-import TransactionHelper from './transaction'
 import Router from './router';
 
 const provider = config.testNodeAddress;// testing for now. use `config.ethNodeAddress;` for production
@@ -14,7 +13,3 @@ web3.eth.defaultAccount = config.walletAddress;
 queryUniswap(ethersProvider).then((trade) => {
   Router.executeTrade(web3, trade);
 });
-
-// Test Address and PK
-// address: '0x4a9b3b57Cc8eCA33Fac7e3065cd28A119De105c8',
-// privateKey: '0x805979139a2981f803717febbd1d5c458412daaded7d193f2c9fc3b30e550602',

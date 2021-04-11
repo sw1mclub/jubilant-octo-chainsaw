@@ -16,13 +16,13 @@ async function executeTrade(web3: Web3, trade: Trade) {
     const deadline = Date.now() + (1000 * 60 * 30);
     const outputAmout = web3.utils.toBN(Math.floor(Number(trade.outputAmount.toExact())));
     const inputAmount = trade.inputAmount.toExact();
-    const path = trade.route.path.map((token)=>{return token.address});
-    const args = {outputAmout, path, myAddress, deadline, inputAmount};
+    const path = trade.route.path.map((token) => { return token.address });
+    const args = { outputAmout, path, myAddress, deadline, inputAmount };
     console.log(args);
     const transactionData = await routerContract.methods.swapETHForExactTokens(
-        outputAmout, 
-        path, 
-        myAddress, 
+        outputAmout,
+        path,
+        myAddress,
         deadline).encodeABI();
     console.log("Created transaction data and sending transaction");
     console.log(transactionData);

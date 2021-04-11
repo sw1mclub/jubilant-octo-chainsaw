@@ -1,4 +1,4 @@
-# A TypeScript Ethereum RPC Client in with Docker support.
+# A TypeScript Uniswap Client with Docker support.
 
 ## Setup
 Create a file in application/configs called `secret-config.json`. You can follow application/configs/example-config.json.
@@ -9,6 +9,7 @@ Configs:
 * walletAddress: Your ethereum wallet address.
 * privateKey: Your ethereum private key.
 * usdcTokenAddress: Address for the USDC token contract.
+* routerContractAddress: Address for the uniswap router contract.
 * chainID: Set to 1 for mainnet.
 * chain: Name of the chain to use. "mainnet" for mainnet.
 
