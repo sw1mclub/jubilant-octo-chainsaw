@@ -60,4 +60,4 @@ async function sendTransaction(web3: Web3, destinationWalletAddress: string, amo
     );
 }
 
-export default sendTransaction;
+export default {sendTransaction, getCurrentGasPrices};

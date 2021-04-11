@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@uniswap/sdk": "^3.0.3",
+    "@uniswap/v2-periphery": "*",
     "axios": "^0.21.1",
     "ethereumjs-tx": "^2.1.2",
     "ethers": "^5.1.0",

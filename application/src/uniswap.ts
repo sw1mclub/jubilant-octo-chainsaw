@@ -11,7 +11,7 @@ async function queryUniswap(customHttpProvider: ethers.providers.JsonRpcProvider
     
     console.log("WETH --> USDC:", route.midPrice.toSignificant(6));
     console.log("USDC --> WETH:", route.midPrice.invert().toSignificant(6));
-    const trade = new Trade(route, new TokenAmount(weth, '100000000000000000'), TradeType.EXACT_INPUT);
+    const trade = new Trade(route, new TokenAmount(weth, '10000000000000000'), TradeType.EXACT_INPUT);
     console.log("Execution Price WETH --> USDC:", trade.executionPrice.toSignificant(6));
     console.log("Mid Price after trade WETH --> USDC:", trade.nextMidPrice.toSignificant(6));
     return trade;
