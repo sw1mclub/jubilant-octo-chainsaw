@@ -10,6 +10,6 @@ const ethersProvider = new ethers.providers.JsonRpcProvider(config.ethNodeAddres
 const web3 = new Web3(web3Provider);
 web3.eth.defaultAccount = config.walletAddress;
 
-TradeBuilder.createEthToUSDCTrade(ethersProvider).then((trade) => {
+TradeBuilder.createEthToUSDCTrade(ethersProvider, '10000000000000000').then((trade) => {
   Router.executeTrade(web3, trade);
 });
