@@ -47,6 +47,7 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
             ethBalance = result.eth;
             usdcBalance = result.usdc;
             lastTradeUnixTime = Date.now();
+            lastEthPrice = Number(prices.wethToUSDC);
             continue;
         }
 
@@ -55,6 +56,7 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
             ethBalance = result.eth;
             usdcBalance = result.usdc;
             lastTradeUnixTime = Date.now();
+            lastEthPrice = Number(prices.wethToUSDC);
             continue;
         }
     }
