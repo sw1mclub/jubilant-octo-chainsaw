@@ -31,7 +31,8 @@ async function createEthToUSDCTrade(customHttpProvider: ethers.providers.JsonRpc
     return trade;
 }
 
-async function createUSDCToEthTrade(customHttpProvider: ethers.providers.JsonRpcProvider, usdcToSpend: string): Promise<Trade> {
+async function createUSDCToEthTrade(customHttpProvider: ethers.providers.JsonRpcProvider, usdcToSpend: number): Promise<Trade> {
+    const usdcToSpendString = usdcToSpend * 1000000 + "";
     const chainID = ChainId.MAINNET;
     const weth = await Fetcher.fetchTokenData(chainID, WETH[chainID].address, customHttpProvider);
     const usdc = await Fetcher.fetchTokenData(chainID, config.usdcTokenAddress, customHttpProvider);
@@ -40,7 +41,7 @@ async function createUSDCToEthTrade(customHttpProvider: ethers.providers.JsonRpc
     
     console.log("USDC --> WETH:", route.midPrice.toSignificant(6));
     console.log("WETH --> USDC:", route.midPrice.invert().toSignificant(6));
-    const trade = new Trade(route, new TokenAmount(usdc, usdcToSpend), TradeType.EXACT_INPUT);
+    const trade = new Trade(route, new TokenAmount(usdc, usdcToSpendString), TradeType.EXACT_INPUT);
     console.log("Execution Price USDC --> WETH:", trade.executionPrice.toSignificant(6));
     console.log("Mid Price after trade USDC --> WETH:", trade.nextMidPrice.toSignificant(6));
     return trade;
