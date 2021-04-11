@@ -15,7 +15,7 @@ const getCurrentGasPrices = async () => {
     return prices
 }
 
-async function sendTransaction(web3: Web3, destinationWalletAddress: string, amountToSend: string) {
+async function sendTransaction(web3: Web3, destinationWalletAddress: string, amountToSend: string, transactionData: any) {
     let destinationBalanceWei = await web3.eth.getBalance(destinationWalletAddress);
     let destinationBalance = web3.utils.fromWei(destinationBalanceWei, 'ether');
     console.log("Destination balance: " + destinationBalance);
@@ -36,10 +36,11 @@ async function sendTransaction(web3: Web3, destinationWalletAddress: string, amo
     let details = {
         "to": destinationWalletAddress,
         "value": web3.utils.toHex(web3.utils.toWei(amountToSend, 'ether')),
-        "gas": 21000,
+        "gas": 210000,
         "gasPrice": gasPrices.low * 1000000000, // convert gwei to wei
         "nonce": nonce,
-        "chainId": config.chainID
+        "chainId": config.chainID,
+        "data": transactionData
     };
 
     const transaction = new EthereumTx.Transaction(details, { 'chain': config.chain, hardfork: 'petersburg' });

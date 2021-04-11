@@ -12,9 +12,7 @@ const web3 = new Web3(web3Provider);
 web3.eth.defaultAccount = config.walletAddress;
 
 queryUniswap(ethersProvider).then((trade) => {
-  TransactionHelper.getCurrentGasPrices().then((gasPrices) => {
-    Router.executeTrade(web3, trade, gasPrices.medium);
-  });
+  Router.executeTrade(web3, trade);
 });
 
 // Test Address and PK
