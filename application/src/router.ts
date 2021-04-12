@@ -13,13 +13,13 @@ async function executeEthToTokenTrade(web3: Web3, trade: Trade) {
         console.log("ERROR: couldn't find my wallet address.");
         return null;
     }
-    const deadline = Date.now() + (1000 * 60 * 30);
-    const outputAmount = web3.utils.toBN(Math.floor(Number(trade.outputAmount.toExact())));
+    const deadline = Math.ceil((Date.now() + (1000 * 60 * 30))/1000);
+    const outputAmount = Math.floor(Number(trade.outputAmount.toExact()) - 10) + "000000000000000000";
     const inputAmount = trade.inputAmount.toExact();
     const path = trade.route.path.map((token) => { return token.address });
     const args = { outputAmount, path, myAddress, deadline, inputAmount };
     console.log(args);
-    const transactionData = await routerContract.methods.swapETHForExactTokens(
+    const transactionData = await routerContract.methods.swapExactETHForTokens(
         outputAmount,
         path,
         myAddress,
@@ -37,17 +37,17 @@ async function executeTokenToEthTrade(web3: Web3, trade: Trade) {
         console.log("ERROR: couldn't find my wallet address.");
         return null;
     }
-    const deadline = Date.now() + (1000 * 60 * 30);
-    const outputAmount = web3.utils.toWei(trade.outputAmount.toExact(), 'ether');
-    const inputAmount = trade.inputAmount.toExact();
-    const inputAmountMax = web3.utils.toBN(Math.ceil(Number(inputAmount) + 10));
+    const deadline = Math.ceil((Date.now() + (1000 * 60 * 30))/1000);
+    const amountOutMin = web3.utils.toWei(trade.outputAmount.toExact(), 'ether');
+    const inputAmount = Math.floor(Number(trade.inputAmount.toExact())) + "000000000000000000";
+    const amountIn = web3.utils.toBN(Math.ceil(Number(inputAmount) + 10));
     const path = trade.route.path.map((token) => { return token.address });
-    const args = { outputAmount, path, myAddress, deadline, inputAmount };
+    const args = { amountOutMin, path, myAddress, deadline, inputAmount };
     console.log("Creating tokens to eth transaction: ")
     console.log(args);
-    const transactionData = await routerContract.methods.swapTokensForExactETH(
-        outputAmount,
-        inputAmountMax,
+    const transactionData = await routerContract.methods.swapExactTokensForETH(
+        amountIn,
+        amountOutMin,
         path,
         myAddress,
         deadline).encodeABI();

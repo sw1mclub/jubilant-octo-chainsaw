@@ -37,7 +37,7 @@ async function sendTransaction(web3: Web3, destinationWalletAddress: string, amo
         "to": destinationWalletAddress,
         "value": web3.utils.toHex(web3.utils.toWei(amountToSend, 'ether')),
         "gas": 210000,
-        "gasPrice": gasPrices.low * 1000000000, // convert gwei to wei
+        "gasPrice": gasPrices.medium * 1000000000, // convert gwei to wei
         "nonce": nonce,
         "chainId": config.chainID,
         "data": transactionData

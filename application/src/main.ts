@@ -19,28 +19,6 @@ async function sleep(ms: number) {
   });
 }
 
-async function verifyCanExecuteEthToUSDCTransaction(): Promise<boolean> {
-  try {
-    const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, 10);
-    await Router.executeTokenToEthTrade(web3, trade);
-    await sleep(VERIFICATION_INTERVAL);
-    return true;
-  } catch (error) {
-    return false;
-  };
-}
-
-async function verifyCanExecuteUSDCToEthTransaction(): Promise<boolean> {
-  try {
-    const trade = await TradeBuilder.createEthToUSDCTrade(ethersProvider, '0.01');
-    await Router.executeEthToTokenTrade(web3, trade);
-    await sleep(VERIFICATION_INTERVAL);
-    return true;
-  } catch (error) {
-    return false;
-  };
-}
-
 async function getBalances() {
   const ethBalance = await TradeBuilder.getMyEthBalance(web3);
   const usdcBalance = await TradeBuilder.getUSDCBalance(web3);
@@ -50,44 +28,42 @@ async function getBalances() {
   };
 }
 
+const buyEth = async (usdcAmount: number) => {
+  const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, usdcAmount + "000000000000000000");
+  await Router.executeTokenToEthTrade(web3, trade);
+  await sleep(VERIFICATION_INTERVAL);
+
+  return await getBalances();
+};
+
+const buyUSDC = async (ethAmount: number) => {
+  const trade = await TradeBuilder.createEthToUSDCTrade(ethersProvider, ethAmount + "");
+  await Router.executeEthToTokenTrade(web3, trade);
+  await sleep(VERIFICATION_INTERVAL);
+
+  return await getBalances();
+};
+
 async function main() {
+  console.log("Starting");
   const initialEthBalance = await TradeBuilder.getMyEthBalance(web3);
-  const initialUSDCBalance = await TradeBuilder.getUSDCBalance(web3);
+  const initialUSDCBalance = 0; //await TradeBuilder.getUSDCBalance(web3);
 
   console.log("Initial balances:");
   console.log({ initialEthBalance, initialUSDCBalance });
 
-  const canExecuteEthToUSDC = await verifyCanExecuteEthToUSDCTransaction();
+  const canExecuteEthToUSDC = await buyUSDC(0.1);// verifyCanExecuteEthToUSDCTransaction
   if (!canExecuteEthToUSDC) {
     console.log('Cannot execute eth to usdc trades. Terminating...');
     return;
   };
 
-  const canExecuteUSDCToEth = await verifyCanExecuteUSDCToEthTransaction();
+  const canExecuteUSDCToEth = await buyEth(200);// verifyCanExecuteUSDCToEthTransaction
 
   if (!canExecuteUSDCToEth) {
     console.log('Cannot execute usdc to eth trades. Terminating...');
     return;
   }
-
-  const buyEth = async (usdcAmount: number) => {
-    const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, usdcAmount);
-    await Router.executeTokenToEthTrade(web3, trade);
-    await sleep(VERIFICATION_INTERVAL);
-
-    return await getBalances();
-  };
-
-  const buyUSDC = async (ethAmount: number) => {
-    const prices = await TradeBuilder.getPrices(ethersProvider);
-    const currentEthPrice = Number(prices.wethToUSDC);
-
-    const trade = await TradeBuilder.createEthToUSDCTrade(ethersProvider, ethAmount + "");
-    await Router.executeEthToTokenTrade(web3, trade);
-    await sleep(VERIFICATION_INTERVAL);
-
-    return await getBalances();
-  };
 
   Strategy.executeStrategy(web3, ethersProvider, buyEth, buyUSDC)
 }

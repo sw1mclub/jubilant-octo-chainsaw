@@ -35,8 +35,7 @@ async function createEthToUSDCTrade(customHttpProvider: ethers.providers.JsonRpc
     return trade;
 }
 
-async function createUSDCToEthTrade(customHttpProvider: ethers.providers.JsonRpcProvider, usdcToSpend: number): Promise<Trade> {
-    const usdcToSpendString = usdcToSpend * 1000000 + "";
+async function createUSDCToEthTrade(customHttpProvider: ethers.providers.JsonRpcProvider, usdcToSpendString: string): Promise<Trade> {
     const chainID = ChainId.MAINNET;
     const weth = await Fetcher.fetchTokenData(chainID, WETH[chainID].address, customHttpProvider);
     const usdc = await Fetcher.fetchTokenData(chainID, config.usdcTokenAddress, customHttpProvider);
