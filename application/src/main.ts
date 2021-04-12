@@ -47,7 +47,7 @@ const buyUSDC = async (ethAmount: number) => {
 async function main() {
   console.log("Starting");
   const initialEthBalance = await TradeBuilder.getMyEthBalance(web3);
-  const initialUSDCBalance = 0; //await TradeBuilder.getUSDCBalance(web3);
+  const initialUSDCBalance = await TradeBuilder.getUSDCBalance(web3);
 
   console.log("Initial balances:");
   console.log({ initialEthBalance, initialUSDCBalance });
