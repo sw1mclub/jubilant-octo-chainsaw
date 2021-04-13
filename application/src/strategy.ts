@@ -27,7 +27,7 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
     const prices = await TradeBuilder.getPrices(ethersProvider);
     let lastEthPrice = Number(prices.wethToUSDC);
     let ethBalance = Number(myBalance);
-    let usdcBalance = 0;
+    let usdcBalance = await TradeBuilder.getUSDCBalance(web3);
     let lastTradeUnixTime = 0;
 
     while (true) {
