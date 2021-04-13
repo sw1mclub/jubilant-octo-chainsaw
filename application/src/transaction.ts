@@ -52,7 +52,7 @@ async function sendTransaction(web3: Web3, destinationWalletAddress: string, amo
     const transactionId = await web3.eth.sendSignedTransaction("0x" + serializedTransaction.toString('hex'),
         function (err, hash) {
             if (!err) {
-                console.log("Success! See transaction here: https://rinkeby.etherscan.io/tx/" + hash);
+                console.log("Success! See transaction here: https://etherscan.io/tx/" + hash);
             } else {
                 console.log("something went wrong");
                 console.log(err);

@@ -7,7 +7,7 @@ import Strategy from './strategy';
 
 const VERIFICATION_INTERVAL = 1000 * 60 * 10;
 
-const provider = config.testNodeAddress;// testing for now. use `config.ethNodeAddress;` for production
+const provider = config.ethNodeAddress;
 const web3Provider = new Web3.providers.HttpProvider(provider);
 const ethersProvider = new ethers.providers.JsonRpcProvider(config.ethNodeAddress);
 const web3 = new Web3(web3Provider);
