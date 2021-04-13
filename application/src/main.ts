@@ -29,7 +29,8 @@ async function getBalances() {
 }
 
 const buyEth = async (usdcAmount: number) => {
-  const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, usdcAmount + "000000000000000000");
+  const roundedTokenAmount = Math.floor(usdcAmount);
+  const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, roundedTokenAmount + "000000000000000000");
   await Router.executeTokenToEthTrade(web3, trade);
   await sleep(VERIFICATION_INTERVAL);
 
