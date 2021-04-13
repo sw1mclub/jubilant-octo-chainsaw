@@ -13,12 +13,6 @@ const ethersProvider = new ethers.providers.JsonRpcProvider(config.ethNodeAddres
 const web3 = new Web3(web3Provider);
 web3.eth.defaultAccount = config.walletAddress;
 
-async function sleep(ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 async function getBalances() {
   const ethBalance = await TradeBuilder.getMyEthBalance(web3);
   const usdcBalance = await TradeBuilder.getUSDCBalance(web3);
@@ -32,16 +26,12 @@ const buyEth = async (usdcAmount: number) => {
   const roundedTokenAmount = Math.floor(usdcAmount);
   const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, roundedTokenAmount + "000000000000000000");
   await Router.executeTokenToEthTrade(web3, trade);
-  await sleep(VERIFICATION_INTERVAL);
-
   return await getBalances();
 };
 
 const buyUSDC = async (ethAmount: number) => {
   const trade = await TradeBuilder.createEthToUSDCTrade(ethersProvider, ethAmount + "");
   await Router.executeEthToTokenTrade(web3, trade);
-  await sleep(VERIFICATION_INTERVAL);
-
   return await getBalances();
 };
 
