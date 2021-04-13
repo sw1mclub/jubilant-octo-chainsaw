@@ -5,7 +5,7 @@ import * as ethers from 'ethers';
 import Router from './router';
 import Strategy from './strategy';
 
-const VERIFICATION_INTERVAL = 1000 * 60 * 10;
+const VERIFICATION_INTERVAL = 1000 * 60 * 5;
 
 const provider = config.ethNodeAddress;
 const web3Provider = new Web3.providers.HttpProvider(provider);

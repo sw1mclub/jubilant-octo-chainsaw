@@ -10,10 +10,6 @@ const ethersProvider = new ethers.providers.JsonRpcProvider(config.ethNodeAddres
 const web3 = new Web3(web3Provider);
 web3.eth.defaultAccount = config.walletAddress;
 
-const TRADE_COOLDOWN_TIME = 1000 * 60 * 10;
-const INTERVAL = 1000 * 60;
-const VOLATILITY_THRESHOLD = 0.05;
-
 async function startTest() {
     const myAddress = web3.eth.defaultAccount;
     if (!myAddress) {

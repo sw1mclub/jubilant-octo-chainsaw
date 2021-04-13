@@ -2,9 +2,9 @@ import Web3 from 'web3';
 import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
 
-const TRADE_COOLDOWN_TIME = 1000 * 60 * 2;
-const INTERVAL = 1000 * 10;
-const VOLATILITY_THRESHOLD = 0.0005;
+const TRADE_COOLDOWN_TIME = 1000 * 60 * 10;
+const INTERVAL = 1000 * 60;
+const VOLATILITY_THRESHOLD = 0.001;
 
 const ETH_TO_SPEND = 2;
 
@@ -30,11 +30,11 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
     let usdcBalance = 0;
     let lastTradeUnixTime = 0;
 
-    console.log("Initial eth balance: " + ethBalance);
     while (true) {
+        await sleep(INTERVAL);
         console.log("CURRENT STATE:");
         console.log({ ethBalance, usdcBalance, lastTradeUnixTime });
-        await sleep(INTERVAL);
+
         const now = Date.now();
         if (lastTradeUnixTime + TRADE_COOLDOWN_TIME > now) {
             continue;
@@ -51,6 +51,8 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
             lastTradeUnixTime = Date.now();
             lastEthPrice = Number(prices.wethToUSDC);
             continue;
+        } else if (ethBalance > ETH_TO_SPEND) {
+            console.log("Eth Price needs to go up by " + (sellThreshold - currentEthPrice));
         }
 
         if (usdcBalance > 500 && currentEthPrice < buyThreshold) {
@@ -60,6 +62,8 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
             lastTradeUnixTime = Date.now();
             lastEthPrice = Number(prices.wethToUSDC);
             continue;
+        } else if (usdcBalance > 500) {
+            console.log("Eth Price needs to go down by " + (currentEthPrice - buyThreshold));
         }
     }
 }
