@@ -5,11 +5,11 @@ import * as EthereumTx from 'ethereumjs-tx';
 
 const getCurrentGasPrices = async () => {
     console.log("getting current gas prices:");
-    let response = await axios.get('https://ethgasstation.info/json/ethgasAPI.json')
+    let response = await axios.get('https://api.etherscan.io/api?module=gastracker&action=gasoracle')
     let prices = {
-        low: response.data.safeLow / 10,
-        medium: response.data.average / 10,
-        high: response.data.fast / 10
+        low: Number(response.data.result.SafeGasPrice),
+        medium: Number(response.data.result.ProposeGasPrice),
+        high: Number(response.data.FastGasPrice)
     }
     console.log(prices);
     return prices
