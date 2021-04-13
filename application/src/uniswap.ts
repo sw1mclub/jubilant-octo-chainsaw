@@ -54,7 +54,7 @@ async function getUSDCBalance(web3: Web3): Promise<number> {
     const address = web3.eth.defaultAccount;
     const USDContractInstance = new web3.eth.Contract(tokenABI as AbiItem[], config.usdcTokenAddress);
     const balanceResult = await USDContractInstance.methods.balanceOf(address).call();
-    const balance = Number(balanceResult) / Math.pow(10, 6);
+    const balance = Number(balanceResult) / Math.pow(10, 17);
     return balance;
 }
 
