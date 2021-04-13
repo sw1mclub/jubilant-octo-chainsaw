@@ -6,4 +6,4 @@ COPY application/ .
 RUN npm install
 RUN chown -R app /opt/app
 USER app
-CMD [ "npm", "run", "simulate_strategy" ]
+CMD [ "npm", "run", "start" ]
