@@ -52,18 +52,20 @@ async function main() {
   console.log("Initial balances:");
   console.log({ initialEthBalance, initialUSDCBalance });
 
-  const canExecuteEthToUSDC = await buyUSDC(0.1);// verifyCanExecuteEthToUSDCTransaction
-  if (!canExecuteEthToUSDC) {
-    console.log('Cannot execute eth to usdc trades. Terminating...');
-    return;
-  };
+  // Uncomment if you want to verify you can transact.
 
-  const canExecuteUSDCToEth = await buyEth(200);// verifyCanExecuteUSDCToEthTransaction
+  // const canExecuteEthToUSDC = await buyUSDC(0.1);// verifyCanExecuteEthToUSDCTransaction
+  // if (!canExecuteEthToUSDC) {
+  //   console.log('Cannot execute eth to usdc trades. Terminating...');
+  //   return;
+  // };
 
-  if (!canExecuteUSDCToEth) {
-    console.log('Cannot execute usdc to eth trades. Terminating...');
-    return;
-  }
+  // const canExecuteUSDCToEth = await buyEth(200);// verifyCanExecuteUSDCToEthTransaction
+
+  // if (!canExecuteUSDCToEth) {
+  //   console.log('Cannot execute usdc to eth trades. Terminating...');
+  //   return;
+  // }
 
   Strategy.executeStrategy(web3, ethersProvider, buyEth, buyUSDC)
 }
