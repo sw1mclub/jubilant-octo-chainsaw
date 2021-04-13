@@ -7,7 +7,7 @@ const INTERVAL = 1000 * 60;
 const BUY_ETH_PRICE = 2100;
 const SELL_ETH_PRICE = 2200;
 
-const ETH_TO_SPEND = 0.2;
+const ETH_TO_SPEND = 0.3;
 const TOKEN_LOWER_BOUND = 400;
 
 type BuyFunc = (amount: number) => Promise<{ eth: number, usdc: number }>;
@@ -26,8 +26,6 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
     }
     const myBalanceWei = await web3.eth.getBalance(myAddress);
     const myBalance = web3.utils.fromWei(myBalanceWei, 'ether')
-    const prices = await TradeBuilder.getPrices(ethersProvider);
-    let lastEthPrice = Number(prices.wethToUSDC);
     let ethBalance = Number(myBalance);
     let usdcBalance = await TradeBuilder.getUSDCBalance(web3);
     let lastTradeUnixTime = 0;
@@ -51,7 +49,6 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
             ethBalance = result.eth;
             usdcBalance = result.usdc;
             lastTradeUnixTime = Date.now();
-            lastEthPrice = Number(prices.wethToUSDC);
             continue;
         } else if (ethBalance > ETH_TO_SPEND) {
             console.log("Eth Price needs to go up by " + (sellThreshold - currentEthPrice));
@@ -62,7 +59,6 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
             ethBalance = result.eth;
             usdcBalance = result.usdc;
             lastTradeUnixTime = Date.now();
-            lastEthPrice = Number(prices.wethToUSDC);
             continue;
         } else if (usdcBalance > TOKEN_LOWER_BOUND) {
             console.log("Eth Price needs to go down by " + (currentEthPrice - buyThreshold));
