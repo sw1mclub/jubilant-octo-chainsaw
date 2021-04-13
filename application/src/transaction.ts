@@ -9,7 +9,7 @@ const getCurrentGasPrices = async () => {
     let prices = {
         low: Number(response.data.result.SafeGasPrice),
         medium: Number(response.data.result.ProposeGasPrice),
-        high: Number(response.data.FastGasPrice)
+        high: Number(response.data.result.FastGasPrice)
     }
     console.log(prices);
     return prices
