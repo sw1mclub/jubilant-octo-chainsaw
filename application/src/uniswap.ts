@@ -45,9 +45,9 @@ async function createUSDCToEthTrade(customHttpProvider: ethers.providers.JsonRpc
 async function getUSDCBalance(web3: Web3): Promise<number> {
     const address = web3.eth.defaultAccount;
     const USDContractInstance = new web3.eth.Contract(tokenABI as AbiItem[], config.usdcTokenAddress);
-    const balanceResult = await USDContractInstance.methods.balanceOf(address).call();
-    const balance = Number(balanceResult) / Math.pow(10, 18);
-    return balance;
+    const balanceResult = web3.utils.toBN(await USDContractInstance.methods.balanceOf(address).call());
+    const balance = balanceResult.div(web3.utils.toBN(Math.pow(10, 15)));
+    return balance.toNumber() / 1000;
 }
 
 async function getMyEthBalance(web3: Web3) {

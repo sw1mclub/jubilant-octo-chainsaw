@@ -22,3 +22,7 @@ To run via docker user the commands
 * `docker run -it application`
 
 To run the program, run from the application directory `npm run start`
+
+## Running tests
+1. Set up you secret-config.json file
+2. `npm run test`
