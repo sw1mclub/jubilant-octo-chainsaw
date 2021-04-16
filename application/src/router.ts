@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import { AbiItem } from 'web3-utils';
 import * as config from '../configs/secret-config.json';
 import TransactionHelper from './transaction'
+import BigNumberUtil from './bignumberutil';
 
 async function executeEthToTokenTrade(web3: Web3, trade: Trade) {
     const routerAbi = IUniswapV2Router02.abi as AbiItem[];
@@ -13,8 +14,10 @@ async function executeEthToTokenTrade(web3: Web3, trade: Trade) {
         console.log("ERROR: couldn't find my wallet address.");
         return null;
     }
-    const deadline = Math.ceil((Date.now() + (1000 * 60 * 30))/1000);
-    const outputAmount = Math.floor(Number(trade.outputAmount.toExact()) - 10) + "000000000000000000";
+    const deadline = Math.ceil((Date.now() + (1000 * 60 * 30)) / 1000);
+    const outputAmount =
+        BigNumberUtil.tokenAmountNumberToString(
+            Math.floor(Number(trade.outputAmount.toExact()) - 10));
     const inputAmount = trade.inputAmount.toExact();
     const path = trade.route.path.map((token) => { return token.address });
     const args = { outputAmount, path, myAddress, deadline, inputAmount };
@@ -37,9 +40,10 @@ async function executeTokenToEthTrade(web3: Web3, trade: Trade) {
         console.log("ERROR: couldn't find my wallet address.");
         return null;
     }
-    const deadline = Math.ceil((Date.now() + (1000 * 60 * 30))/1000);
+    const deadline = Math.ceil((Date.now() + (1000 * 60 * 30)) / 1000);
     const amountOutMin = web3.utils.toWei(trade.outputAmount.toExact(), 'ether');
-    const inputAmount = Math.floor(Number(trade.inputAmount.toExact())) + "000000000000000000";
+    const inputAmount = BigNumberUtil.tokenAmountNumberToString(
+        Math.floor(Number(trade.inputAmount.toExact())));
     const path = trade.route.path.map((token) => { return token.address });
     const args = { amountOutMin, path, myAddress, deadline, inputAmount };
     console.log("Creating tokens to eth transaction: ")

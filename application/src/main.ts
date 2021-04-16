@@ -4,6 +4,7 @@ import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
 import Router from './router';
 import Strategy from './strategy';
+import BigNumberUtil from './bignumberutil';
 
 const VERIFICATION_INTERVAL = 1000 * 60 * 5;
 
@@ -23,8 +24,8 @@ async function getBalances() {
 }
 
 const buyEth = async (usdcAmount: number) => {
-  const roundedTokenAmount = Math.floor(usdcAmount);
-  const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, roundedTokenAmount + "000000000000000000");
+  const roundedTokenAmount = BigNumberUtil.tokenAmountNumberToString(usdcAmount);
+  const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, roundedTokenAmount);
   await Router.executeTokenToEthTrade(web3, trade);
   return await getBalances();
 };

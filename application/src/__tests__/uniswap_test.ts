@@ -1,6 +1,7 @@
 import * as config from '../../configs/test-config.json';
 import * as ethers from 'ethers';
 import TradeBuilder from '../uniswap';
+import BigNumberUtil from '../bignumberutil';
 
 describe("TradeBuilder functions", () => {
     const ethersProvider = new ethers.providers.JsonRpcProvider(config.ethNodeAddress);
@@ -13,7 +14,8 @@ describe("TradeBuilder functions", () => {
 
     it("should properly create token to eth trade", async () => {
         const tokenAmount = 2468;
-        const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, tokenAmount + "000000000000000000");
+        const roundedTokenAmount = BigNumberUtil.tokenAmountNumberToString(tokenAmount);
+        const trade = await TradeBuilder.createUSDCToEthTrade(ethersProvider, roundedTokenAmount);
         expect(trade.inputAmount.toExact()).toEqual("" + tokenAmount);
     });
 });
