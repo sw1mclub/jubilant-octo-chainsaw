@@ -1,12 +1,11 @@
 import * as config from '../configs/secret-config.json';
+import * as strategyConfig from '../configs/strategy-config.json';
 import Web3 from 'web3';
 import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
 import Router from './router';
 import Strategy from './strategy';
 import BigNumberUtil from './bignumberutil';
-
-const VERIFICATION_INTERVAL = 1000 * 60 * 5;
 
 const provider = config.ethNodeAddress;
 const web3Provider = new Web3.providers.HttpProvider(provider);
@@ -59,7 +58,7 @@ async function main() {
   //   return;
   // }
 
-  Strategy.executeStrategy(web3, ethersProvider, buyEth, buyUSDC)
+  Strategy.executeStrategy(web3, ethersProvider, strategyConfig, buyEth, buyUSDC)
 }
 
 main();

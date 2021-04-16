@@ -1,4 +1,5 @@
 import * as config from '../configs/secret-config.json';
+import * as strategyConfig from '../configs/test-strategy-config.json';
 import Web3 from 'web3';
 import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
@@ -43,7 +44,7 @@ async function startTest() {
         };
     }
 
-    Strategy.executeStrategy(web3, ethersProvider, buyEth, buyUSDC);
+    Strategy.executeStrategy(web3, ethersProvider, strategyConfig, buyEth, buyUSDC);
 }
 
 startTest();

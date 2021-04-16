@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "start": "tsc && node out/src/main.js ",
-    "simulate_strategy": "tsc && node out/src/tests/simulate_strategy.js ",
+    "simulate_strategy": "tsc && node out/src/simulate_strategy.js ",
     "create_wallet": "tsc && node out/src/createwallet.js ",
     "test": "jest"
   },

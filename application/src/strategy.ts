@@ -2,13 +2,14 @@ import Web3 from 'web3';
 import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
 
-const TRADE_COOLDOWN_TIME = 1000 * 60 * 10;
-const INTERVAL = 1000 * 60;
-const BUY_ETH_PRICE = 2100;
-const SELL_ETH_PRICE = 2200;
-
-const ETH_TO_SPEND = 0.3;
-const TOKEN_LOWER_BOUND = 400;
+type StrategyConfig = {
+    tradeCooldownTimeSec: number,
+    intervalSec: number,
+    buyEthPrice: number,
+    sellEthPrice: number,
+    ethToSpend: number,
+    tokenLowerBound: number
+}
 
 type BuyFunc = (amount: number) => Promise<{ eth: number, usdc: number }>;
 
@@ -18,7 +19,12 @@ async function sleep(ms: number) {
     });
 }
 
-async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.JsonRpcProvider, buyEth: BuyFunc, buyUSDC: BuyFunc) {
+async function executeStrategy(
+    web3: Web3,
+    ethersProvider: ethers.providers.JsonRpcProvider,
+    strategyConfig: StrategyConfig,
+    buyEth: BuyFunc,
+    buyUSDC: BuyFunc) {
     const myAddress = web3.eth.defaultAccount;
     if (!myAddress) {
         console.log("ERROR: couldn't find my wallet address.");
@@ -31,36 +37,36 @@ async function executeStrategy(web3: Web3, ethersProvider: ethers.providers.Json
     let lastTradeUnixTime = 0;
 
     while (true) {
-        await sleep(INTERVAL);
+        await sleep(strategyConfig.intervalSec * 1000);
         console.log("CURRENT STATE:");
         console.log({ ethBalance, usdcBalance, lastTradeUnixTime });
 
         const now = Date.now();
-        if (lastTradeUnixTime + TRADE_COOLDOWN_TIME > now) {
+        if (lastTradeUnixTime + (strategyConfig.tradeCooldownTimeSec * 1000) > now) {
             continue;
         }
 
         const prices = await TradeBuilder.getPrices(ethersProvider);
         const currentEthPrice = Number(prices.wethToUSDC);
-        const sellThreshold = SELL_ETH_PRICE;
-        const buyThreshold = BUY_ETH_PRICE;
-        if (ethBalance > ETH_TO_SPEND + 0.1 && currentEthPrice > sellThreshold) {
-            const result = await buyUSDC(ETH_TO_SPEND);
+        const sellThreshold = strategyConfig.sellEthPrice;
+        const buyThreshold = strategyConfig.buyEthPrice;
+        if (ethBalance > strategyConfig.ethToSpend + 0.1 && currentEthPrice > sellThreshold) {
+            const result = await buyUSDC(strategyConfig.ethToSpend);
             ethBalance = result.eth;
             usdcBalance = result.usdc;
             lastTradeUnixTime = Date.now();
             continue;
-        } else if (ethBalance > ETH_TO_SPEND) {
+        } else if (ethBalance > strategyConfig.ethToSpend) {
             console.log("Eth Price needs to go up by " + (sellThreshold - currentEthPrice));
         }
 
-        if (usdcBalance > TOKEN_LOWER_BOUND && currentEthPrice < buyThreshold) {
+        if (usdcBalance > strategyConfig.tokenLowerBound && currentEthPrice < buyThreshold) {
             const result = await buyEth(usdcBalance);
             ethBalance = result.eth;
             usdcBalance = result.usdc;
             lastTradeUnixTime = Date.now();
             continue;
-        } else if (usdcBalance > TOKEN_LOWER_BOUND) {
+        } else if (usdcBalance > strategyConfig.tokenLowerBound) {
             console.log("Eth Price needs to go down by " + (currentEthPrice - buyThreshold));
         }
     }
