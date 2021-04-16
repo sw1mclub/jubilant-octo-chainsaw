@@ -1,4 +1,3 @@
-import * as config from '../../configs/test-config.json';
 import * as ethers from 'ethers';
 import TradeBuilder from '../uniswap';
 import Simulator from '../simulator';
