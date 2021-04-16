@@ -40,13 +40,12 @@ async function executeTokenToEthTrade(web3: Web3, trade: Trade) {
     const deadline = Math.ceil((Date.now() + (1000 * 60 * 30))/1000);
     const amountOutMin = web3.utils.toWei(trade.outputAmount.toExact(), 'ether');
     const inputAmount = Math.floor(Number(trade.inputAmount.toExact())) + "000000000000000000";
-    const amountIn = web3.utils.toBN(Math.ceil(Number(inputAmount) + 10));
     const path = trade.route.path.map((token) => { return token.address });
     const args = { amountOutMin, path, myAddress, deadline, inputAmount };
     console.log("Creating tokens to eth transaction: ")
     console.log(args);
     const transactionData = await routerContract.methods.swapExactTokensForETH(
-        amountIn,
+        inputAmount,
         amountOutMin,
         path,
         myAddress,
