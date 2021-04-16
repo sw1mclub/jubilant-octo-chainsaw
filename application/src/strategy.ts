@@ -13,6 +13,11 @@ type StrategyConfig = {
 
 type BuyFunc = (amount: number) => Promise<{ eth: number, usdc: number }>;
 
+type BalanceGetter = () => Promise<{
+    eth: number;
+    usdc: number;
+}>;
+
 async function sleep(ms: number) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
@@ -24,16 +29,11 @@ async function executeStrategy(
     ethersProvider: ethers.providers.JsonRpcProvider,
     strategyConfig: StrategyConfig,
     buyEth: BuyFunc,
-    buyUSDC: BuyFunc) {
-    const myAddress = web3.eth.defaultAccount;
-    if (!myAddress) {
-        console.log("ERROR: couldn't find my wallet address.");
-        return null;
-    }
-    const myBalanceWei = await web3.eth.getBalance(myAddress);
-    const myBalance = web3.utils.fromWei(myBalanceWei, 'ether')
-    let ethBalance = Number(myBalance);
-    let usdcBalance = await TradeBuilder.getUSDCBalance(web3);
+    buyUSDC: BuyFunc,
+    getBalance: BalanceGetter) {
+    const balances = await getBalance();
+    let ethBalance = balances.eth;
+    let usdcBalance = balances.usdc;
     let lastTradeUnixTime = 0;
 
     while (true) {

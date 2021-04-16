@@ -44,7 +44,18 @@ async function startTest() {
         };
     }
 
-    Strategy.executeStrategy(web3, ethersProvider, strategyConfig, buyEth, buyUSDC);
+    Strategy.executeStrategy(
+        web3,
+        ethersProvider,
+        strategyConfig,
+        buyEth,
+        buyUSDC,
+        async () => {
+            return {
+                eth: ethBalance,
+                usdc: usdcBalance
+            };
+        });
 }
 
 startTest();
