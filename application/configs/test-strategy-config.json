@@ -1,8 +1,8 @@
 {
-    "tradeCooldownTimeSec": 5,
-    "intervalSec": 1,
-    "buyEthPrice": 2430,
-    "sellEthPrice": 2440,
-    "ethToSpend": 1,
+    "tradeCooldownTimeSec": 0.1,
+    "intervalSec": 0.1,
+    "buyEthPrice": 2400,
+    "sellEthPrice": 2500,
+    "ethToSpend": 4,
     "tokenLowerBound": 400
 }

@@ -1,4 +1,3 @@
-import Web3 from 'web3';
 import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
 
@@ -25,7 +24,6 @@ async function sleep(ms: number) {
 }
 
 async function executeStrategy(
-    web3: Web3,
     ethersProvider: ethers.providers.JsonRpcProvider,
     strategyConfig: StrategyConfig,
     buyEth: BuyFunc,

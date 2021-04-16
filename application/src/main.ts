@@ -58,7 +58,7 @@ async function main() {
   //   return;
   // }
 
-  Strategy.executeStrategy(web3, ethersProvider, strategyConfig, buyEth, buyUSDC, getBalances);
+  Strategy.executeStrategy(ethersProvider, strategyConfig, buyEth, buyUSDC, getBalances);
 }
 
 main();
