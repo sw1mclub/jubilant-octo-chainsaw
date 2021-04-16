@@ -1,9 +1,7 @@
 import Router from '../router';
 import Web3 from 'web3';
 import * as config from '../../configs/test-config.json';
-import * as ethers from 'ethers';
 import { Trade } from '@uniswap/sdk';
-import TradeBuilder from '../uniswap';
 
 const Web3PromiEvent = require('web3-core-promievent');
 
@@ -12,8 +10,6 @@ describe("Router functions", () => {
     const web3Provider = new Web3.providers.HttpProvider(provider);
     const web3 = new Web3(web3Provider);
     web3.eth.defaultAccount = config.walletAddress;
-
-    const ethersProvider = new ethers.providers.JsonRpcProvider(config.ethNodeAddress);
 
     const mock = jest.spyOn(web3.eth, 'sendSignedTransaction');
     Date.now = jest.fn(() => 2618610738000);

@@ -25,13 +25,9 @@ async function createEthToUSDCTrade(customHttpProvider: ethers.providers.JsonRpc
     const weth = await Fetcher.fetchTokenData(chainID, WETH[chainID].address, customHttpProvider);
     const usdc = await Fetcher.fetchTokenData(chainID, config.usdcTokenAddress, customHttpProvider);
     const pair = await Fetcher.fetchPairData(weth, usdc, customHttpProvider);
-    const route = new Route([pair], weth, usdc);
 
-    console.log("WETH --> USDC:", route.midPrice.toSignificant(6));
-    console.log("USDC --> WETH:", route.midPrice.invert().toSignificant(6));
+    const route = new Route([pair], weth, usdc);
     const trade = new Trade(route, new TokenAmount(weth, weiToSpend), TradeType.EXACT_INPUT);
-    console.log("Execution Price WETH --> USDC:", trade.executionPrice.toSignificant(6));
-    console.log("Mid Price after trade WETH --> USDC:", trade.nextMidPrice.toSignificant(6));
     return trade;
 }
 
@@ -40,13 +36,9 @@ async function createUSDCToEthTrade(customHttpProvider: ethers.providers.JsonRpc
     const weth = await Fetcher.fetchTokenData(chainID, WETH[chainID].address, customHttpProvider);
     const usdc = await Fetcher.fetchTokenData(chainID, config.usdcTokenAddress, customHttpProvider);
     const pair = await Fetcher.fetchPairData(usdc, weth, customHttpProvider);
-    const route = new Route([pair], usdc, weth);
 
-    console.log("USDC --> WETH:", route.midPrice.toSignificant(6));
-    console.log("WETH --> USDC:", route.midPrice.invert().toSignificant(6));
+    const route = new Route([pair], usdc, weth);
     const trade = new Trade(route, new TokenAmount(usdc, usdcToSpendString), TradeType.EXACT_INPUT);
-    console.log("Execution Price USDC --> WETH:", trade.executionPrice.toSignificant(6));
-    console.log("Mid Price after trade USDC --> WETH:", trade.nextMidPrice.toSignificant(6));
     return trade;
 }
 
