@@ -1,8 +1,8 @@
-import * as config from '../../configs/secret-config.json';
+import * as config from '../configs/secret-config.json';
 import Web3 from 'web3';
-import TradeBuilder from '../uniswap';
+import TradeBuilder from './uniswap';
 import * as ethers from 'ethers';
-import Strategy from '../strategy';
+import Strategy from './strategy';
 
 const provider = config.testNodeAddress;// testing for now. use `config.ethNodeAddress;` for production
 const web3Provider = new Web3.providers.HttpProvider(provider);

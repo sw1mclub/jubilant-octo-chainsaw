@@ -49,7 +49,7 @@ async function sendTransaction(web3: Web3, destinationWalletAddress: string, amo
     const serializedTransaction = transaction.serialize()
 
     console.log("sending transaction...");
-    const transactionId = await web3.eth.sendSignedTransaction("0x" + serializedTransaction.toString('hex'),
+    await web3.eth.sendSignedTransaction("0x" + serializedTransaction.toString('hex'),
         function (err, hash) {
             if (!err) {
                 console.log("Success! See transaction here: https://etherscan.io/tx/" + hash);
@@ -60,7 +60,7 @@ async function sendTransaction(web3: Web3, destinationWalletAddress: string, amo
         }
     );
 
-    return transactionId;
+    return details;
 }
 
 export default {sendTransaction, getCurrentGasPrices};

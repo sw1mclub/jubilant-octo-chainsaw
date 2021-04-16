@@ -1,0 +1,10 @@
+{
+    "ethNodeAddress": "http://172.33.0.3:8545",
+    "testNodeAddress": "https://rinkeby.infura.io/v3/58b609d6db334907b6e3824efb99d740",
+    "walletAddress": "0x3290968a5B50583233588F99D69Cd545bc335d2f",
+    "privateKey": "0000000000000000000000000000000000000000000000000000000000000000",
+    "usdcTokenAddress": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+    "routerContractAddress": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+    "chainID": 4,
+    "chain": "rinkeby"
+}
