@@ -48,7 +48,7 @@ async function executeStrategy(
         const currentEthPrice = Number(prices.wethToUSDC);
         const sellThreshold = strategyConfig.sellEthPrice;
         const buyThreshold = strategyConfig.buyEthPrice;
-        if (ethBalance > strategyConfig.ethToSpend + 0.1 && currentEthPrice > sellThreshold) {
+        if (ethBalance > strategyConfig.ethToSpend + 0.05 && currentEthPrice > sellThreshold) {
             const result = await buyUSDC(strategyConfig.ethToSpend);
             ethBalance = result.eth;
             usdcBalance = result.usdc;

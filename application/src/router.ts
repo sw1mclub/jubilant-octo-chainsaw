@@ -41,7 +41,7 @@ async function executeTokenToEthTrade(web3: Web3, trade: Trade) {
         return null;
     }
     const deadline = Math.ceil((Date.now() + (1000 * 60 * 30)) / 1000);
-    const amountOutMin = web3.utils.toWei(trade.outputAmount.toExact(), 'ether');
+    const amountOutMin = web3.utils.toWei((Number(trade.outputAmount.toExact()) - 0.01) + '', 'ether');
     const inputAmount = BigNumberUtil.tokenAmountNumberToString(
         Math.floor(Number(trade.inputAmount.toExact())));
     const path = trade.route.path.map((token) => { return token.address });
